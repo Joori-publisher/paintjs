@@ -4,14 +4,17 @@ const colors = document.getElementsByClassName("jsColor");
 const range = document.getElementById("jsRange");
 const mode = document.getElementById("jsMode");
 const save = document.getElementById("jsSave");
+const clear = document.getElementById("jsClear");
+
 const INITIAL_COLOR = "#2c2c2c",
+    INITIAL_BG  = "#fff",
     CANVAS_WIDTH = 700,
     CANVAS_HEIGHT = 500;
 
 canvas.width=CANVAS_WIDTH;
 canvas.height=CANVAS_HEIGHT;
 
-ctx.fillStyle = "white";
+ctx.fillStyle = INITIAL_BG;
 ctx.fillRect(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT);
 
 ctx.strokeStyle=INITIAL_COLOR;
@@ -92,6 +95,11 @@ function handleSaveClick(event){
     link.click();
 }
 
+function handleClearClick(){
+    ctx.fillStyle = INITIAL_BG;
+    ctx.fillRect(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT);
+}
+
 if(canvas){
     canvas.addEventListener("mousemove",onMouseMove);
     canvas.addEventListener("mousedown",startPainting);
@@ -112,4 +120,8 @@ if(mode){
 }
 if(save){
     save.addEventListener("click",handleSaveClick);
+}
+
+if(clear){
+    clear.addEventListener("click",handleClearClick);
 }

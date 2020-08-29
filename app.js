@@ -4,11 +4,16 @@ const colors = document.getElementsByClassName("jsColor");
 const range = document.getElementById("jsRange");
 const mode = document.getElementById("jsMode");
 const save = document.getElementById("jsSave");
+const INITIAL_COLOR = "#2c2c2c",
+    CANVAS_WIDTH = 700,
+    CANVAS_HEIGHT = 500;
 
-canvas.width=700;
-canvas.height=500;
+canvas.width=CANVAS_WIDTH;
+canvas.height=CANVAS_HEIGHT;
 
-ctx.strokeStyle="#2c2c2c";
+ctx.strokeStyle=INITIAL_COLOR;
+ctx.fillStyle=INITIAL_COLOR;
+
 ctx.lineWidth=2.5;
 
 let painting = false;
@@ -47,6 +52,7 @@ function onMouseMove(event){
 function handleColorClick(event){
     const color = event.target.style.backgroundColor;
     ctx.strokeStyle = color;
+    ctx.fillStyle=color;
     // console.log(event.target.style.backgroundColor)
 }
 
@@ -58,25 +64,32 @@ function handleRangeChange(event){
 function handleModeClick(event){
     if(filling===true){
         filling=false;
-        mode.innerText="Fill"
+        mode.innerText="Fill";
     }else{
         filling=true;
-        mode.innerText="Paint"
+        mode.innerText="Paint";
     }
+}
+function handleCanvasClick(){
+    if(filling){
+        ctx.fillRect(0,0,CANVAS_WIDTH,CANVAS_HEIGHT);
+    }
+    
 }
 
 if(canvas){
-    canvas.addEventListener("mousemove",onMouseMove)
-    canvas.addEventListener("mousedown",startPainting)
-    canvas.addEventListener("mouseup",stopPainting)
-    canvas.addEventListener("mouseleave",stopPainting)
+    canvas.addEventListener("mousemove",onMouseMove);
+    canvas.addEventListener("mousedown",startPainting);
+    canvas.addEventListener("mouseup",stopPainting);
+    canvas.addEventListener("mouseleave",stopPainting);
+    canvas.addEventListener("click",handleCanvasClick);
 }
-Array.from(colors).forEach(color=>color.addEventListener("click",handleColorClick))
+Array.from(colors).forEach(color=>color.addEventListener("click",handleColorClick));
 
 if(range){
-    range.addEventListener("input",handleRangeChange)
+    range.addEventListener("input",handleRangeChange);
 }
 
 if(mode){
-    mode.addEventListener("click",handleModeClick)
+    mode.addEventListener("click",handleModeClick);
 }
